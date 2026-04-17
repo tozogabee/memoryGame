@@ -12,7 +12,6 @@ const cardIcons: string[] = ['🚗', '⛵', '🐶', '🐱', '🍎', '🍌', '�
 const gameDeck: string[] = [...cardIcons, ...cardIcons];
 
 // --- 2. FISHER-YATES SHUFFLE ---
-// The algorithm described by Richard Durstenfeld in 1964 [cite: 66]
 function fisherYatesShuffle<T>(array: T[]): T[] {
     for (let i = array.length - 1; i > 0; i--) { // [cite: 69]
         const j = Math.floor(Math.random() * (i + 1)); // [cite: 70]
@@ -81,7 +80,6 @@ function initGame(): void {
 }
 
 // --- 4. FLIP LOGIC ---
-// The exact flip logic required to prevent bugs [cite: 53, 55]
 const reversed = 'reversed';
 const found = 'found';
 
