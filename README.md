@@ -12,6 +12,7 @@ A browser-based card memory game built with TypeScript. Find all matching pairs 
 ## Run locally
 
 ```bash
+cd frontend
 npm install
 npm run build
 npm start
@@ -57,15 +58,17 @@ docker compose down
 
 ```
 memoryGame/
-├── src/
-│   ├── index.html        # Game UI
-│   ├── css/
-│   │   └── style.css     # Styles
-│   └── main/
-│       └── main.ts       # Game logic
-├── Dockerfile
+├── frontend/
+│   ├── src/
+│   │   ├── index.html        # Game UI
+│   │   ├── css/
+│   │   │   └── style.css     # Styles
+│   │   └── main/
+│   │       └── main.ts       # Game logic
+│   ├── Dockerfile
+│   ├── bs-config.json        # lite-server config (port 3000)
+│   ├── tsconfig.json
+│   └── package.json
 ├── docker-compose.yml
-├── bs-config.json        # lite-server config (port 3000)
-├── tsconfig.json
-└── package.json
+└── README.md
 ```
