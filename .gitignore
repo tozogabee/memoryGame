@@ -9,3 +9,9 @@ yarn-error.log*
 .pnp.js
 
 .vscode/*
+.idea/
+
+# Build output
+/dist
+/src/dist
+
