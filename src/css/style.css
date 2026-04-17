@@ -1,0 +1,65 @@
+/* Layout */
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    margin: 0;
+    background-color: #f0f4f8;
+    font-family: sans-serif;
+}
+
+h1 { margin-bottom: 10px; color: #d84315; }
+
+.stats {
+    display: flex;
+    gap: 40px;
+    margin-bottom: 20px;
+    font-size: 18px;
+    color: #555;
+}
+
+.game-board {
+    display: grid;
+    grid-template-columns: repeat(4, 100px);
+    grid-template-rows: repeat(4, 100px);
+    gap: 10px;
+}
+
+/* Base card style (hidden state) */
+.card {
+    background-color: #ffcc80;
+    border: 2px solid #d84315;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 40px;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s;
+    user-select: none;
+    position: relative;
+}
+
+/* Show "?" on face-down cards */
+.card:not(.reversed):not(.found)::after {
+    content: '?';
+    font-size: 36px;
+    color: #d84315;
+    font-weight: bold;
+}
+
+/* Flipped state */
+.card.reversed {
+    background-color: #ffffff;
+    cursor: default;
+}
+
+/* Matched state [cite: 52] */
+.card.found {
+    background-color: #a5d6a7; /* Light green to indicate success */
+    border-color: #2e7d32;
+    cursor: default;
+}
