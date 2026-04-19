@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 001-create-users-table
+      author: memorygame
+      changes:
+        - sqlFile:
+            path: sql/001-create-users-table.sql
+            relativeToChangelogFile: true

@@ -1,3 +1,5 @@
+export {};
+
 // --- 1. STATE VARIABLES ---
 let lock: boolean = false;
 let reversedCards: HTMLElement[] = [];

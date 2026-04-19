@@ -10,7 +10,38 @@ body {
     font-family: sans-serif;
 }
 
-h1 { margin-bottom: 10px; color: #d84315; }
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 450px;
+    margin-bottom: 10px;
+}
+
+h1 { color: #d84315; }
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: #555;
+}
+
+.user-info button {
+    padding: 4px 12px;
+    background: none;
+    border: 1px solid #d84315;
+    border-radius: 6px;
+    color: #d84315;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.user-info button:hover {
+    background-color: #d84315;
+    color: #fff;
+}
 
 .stats {
     display: flex;

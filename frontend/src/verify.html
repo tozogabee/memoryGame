@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game – Email Verification</title>
+    <link rel="stylesheet" href="css/login.css">
+</head>
+<body>
+    <div class="auth-card">
+        <h1>Memory Game</h1>
+        <div id="verify-content" class="email-notice">
+            <div class="email-icon">⏳</div>
+            <h2>Verifying...</h2>
+            <p>Please wait while we confirm your email.</p>
+        </div>
+    </div>
+
+    <script>
+        const API = 'http://localhost:4000/api/auth';
+        const token = new URLSearchParams(window.location.search).get('token');
+        const content = document.getElementById('verify-content');
+
+        async function verify() {
+            if (!token) {
+                content.innerHTML = `
+                    <div class="email-icon">❌</div>
+                    <h2>Invalid Link</h2>
+                    <p>No verification token found.</p>
+                    <a href="login.html" class="btn-submit" style="display:block;text-align:center;text-decoration:none;margin-top:16px;">Go to Login</a>
+                `;
+                return;
+            }
+
+            try {
+                const res = await fetch(`${API}/verify/${token}`);
+                const data = await res.json();
+
+                if (res.ok) {
+                    content.innerHTML = `
+                        <div class="email-icon">✅</div>
+                        <h2>Email Confirmed!</h2>
+                        <p>${data.message}</p>
+                        <a href="login.html" class="btn-submit" style="display:block;text-align:center;text-decoration:none;margin-top:16px;">Login</a>
+                    `;
+                } else {
+                    content.innerHTML = `
+                        <div class="email-icon">❌</div>
+                        <h2>Verification Failed</h2>
+                        <p>${data.error}</p>
+                        <a href="login.html" class="btn-submit" style="display:block;text-align:center;text-decoration:none;margin-top:16px;">Go to Login</a>
+                    `;
+                }
+            } catch {
+                content.innerHTML = `
+                    <div class="email-icon">❌</div>
+                    <h2>Connection Error</h2>
+                    <p>Could not connect to the server. Please try again later.</p>
+                    <a href="login.html" class="btn-submit" style="display:block;text-align:center;text-decoration:none;margin-top:16px;">Go to Login</a>
+                `;
+            }
+        }
+
+        verify();
+    </script>
+</body>
+</html>
