@@ -6,7 +6,9 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerSpec from './swagger';
 import authRouter from './routes/auth';
 import { initDb } from './db';
+import { createLogger } from './logger';
 
+const log = createLogger('App');
 const app = express();
 const PORT = process.env.PORT || 4000;
 
@@ -29,11 +31,11 @@ app.use('/api/auth', authRouter);
 initDb()
     .then(() => {
         app.listen(PORT, () => {
-            console.log(`Backend running on http://localhost:${PORT}`);
-            console.log(`Swagger UI:    http://localhost:${PORT}/api/docs`);
+            log.info(`Backend running on http://localhost:${PORT}`);
+            log.info(`Swagger UI:    http://localhost:${PORT}/api/docs`);
         });
     })
     .catch((err) => {
-        console.error('Failed to initialize database:', err);
+        log.error(`Failed to initialize database: ${err.message}`);
         process.exit(1);
     });

@@ -30,7 +30,7 @@ async function handleLogin(e: Event): Promise<void> {
             errorEl.textContent = data.error;
             return;
         }
-        window.location.href = 'index.html';
+        window.location.href = 'game.html';
     } catch {
         errorEl.textContent = 'Could not connect to server.';
     }

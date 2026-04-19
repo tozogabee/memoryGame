@@ -1,10 +1,14 @@
 import nodemailer from 'nodemailer';
 import { Transporter } from 'nodemailer';
+import { createLogger } from './logger';
+
+const log = createLogger('EmailService');
 
 let devTransporter: Transporter | null = null;
 
 async function getTransporter(): Promise<Transporter> {
     if (process.env.SMTP_HOST) {
+        log.debug(`Using SMTP host: ${process.env.SMTP_HOST}`);
         return nodemailer.createTransport({
             host: process.env.SMTP_HOST,
             port: Number(process.env.SMTP_PORT) || 587,
@@ -16,8 +20,8 @@ async function getTransporter(): Promise<Transporter> {
         });
     }
 
-    // Dev fallback: use Ethereal (fake SMTP — emails are captured and previewable in browser)
     if (!devTransporter) {
+        log.warn('No SMTP_HOST configured — using Ethereal test account');
         const testAccount = await nodemailer.createTestAccount();
         devTransporter = nodemailer.createTransport({
             host: 'smtp.ethereal.email',
@@ -27,7 +31,7 @@ async function getTransporter(): Promise<Transporter> {
                 pass: testAccount.pass,
             },
         });
-        console.log('[DEV] Ethereal test account created:', testAccount.user);
+        log.info(`Ethereal test account created: ${testAccount.user}`);
     }
 
     return devTransporter;
@@ -55,6 +59,7 @@ export async function sendVerificationEmail(
         </div>
     `;
 
+    log.info(`Sending verification email to: ${to}`);
     const transporter = await getTransporter();
     const info = await transporter.sendMail({
         from,
@@ -62,12 +67,10 @@ export async function sendVerificationEmail(
         subject: 'Confirm your Memory Game registration',
         html,
     });
+    log.info(`Verification email sent to: ${to}`);
 
-    // In dev (Ethereal), print the preview URL to the console
     const previewUrl = nodemailer.getTestMessageUrl(info);
     if (previewUrl) {
-        console.log('\n--- [DEV] Email sent! Open preview in browser ---');
-        console.log(previewUrl);
-        console.log('-------------------------------------------------\n');
+        log.info(`[DEV] Email preview: ${previewUrl}`);
     }
 }
