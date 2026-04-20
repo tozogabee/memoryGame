@@ -1,4 +1,4 @@
-export {};
+import { API_BASE } from './config.js';
 
 // --- 1. STATE VARIABLES ---
 let lock: boolean = false;
@@ -140,7 +140,7 @@ function checkFounds(): void {
 // --- 6. SAVE SCORE TO BACKEND ---
 async function saveScore(finalScore: number, durationSeconds: number): Promise<void> {
     try {
-        await fetch('http://localhost:4000/api/scores', {
+        await fetch(`${API_BASE}/api/scores`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include',

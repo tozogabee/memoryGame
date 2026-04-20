@@ -1,0 +1,8 @@
+databaseChangeLog:
+  - changeSet:
+      id: 002-create-scores-table
+      author: memorygame
+      changes:
+        - sqlFile:
+            path: sql/002-create-scores-table.sql
+            relativeToChangelogFile: true

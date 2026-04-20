@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Memory Game – Ranking</title>
+    <link rel="stylesheet" href="css/ranking.css">
+</head>
+<body>
+    <div class="ranking-card">
+        <div class="ranking-header">
+            <h1>Ranking</h1>
+            <a href="game.html" class="btn-back">← Back to Game</a>
+        </div>
+
+        <table id="ranking-table">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Player</th>
+                    <th>Score</th>
+                    <th>Time</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody id="ranking-body">
+                <tr><td colspan="5" class="loading">Loading...</td></tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script src="env.js"></script>
+    <script type="module" src="dist/main/ranking.js"></script>
+</body>
+</html>

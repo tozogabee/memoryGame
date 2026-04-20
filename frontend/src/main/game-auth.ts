@@ -1,6 +1,6 @@
-export {};
+import { API_BASE } from './config.js';
 
-const API = 'http://localhost:4000/api/auth';
+const API = `${API_BASE}/api/auth`;
 
 async function checkAuth(): Promise<void> {
     try {
@@ -25,3 +25,19 @@ async function logout(): Promise<void> {
 (window as any).logout = logout;
 
 checkAuth();
+
+// --- INACTIVITY LOGOUT (1 minute) ---
+const INACTIVITY_MS = 60_000;
+let inactivityTimer: number;
+
+function resetInactivityTimer(): void {
+    clearTimeout(inactivityTimer);
+    inactivityTimer = window.setTimeout(async () => {
+        await logout();
+    }, INACTIVITY_MS);
+}
+
+const activityEvents: string[] = ['mousemove', 'mousedown', 'keydown', 'touchstart', 'scroll'];
+activityEvents.forEach(event => window.addEventListener(event, resetInactivityTimer));
+
+resetInactivityTimer();

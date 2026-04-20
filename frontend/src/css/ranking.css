@@ -1,0 +1,83 @@
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 40px 16px;
+    background-color: #f0f4f8;
+    font-family: sans-serif;
+}
+
+.ranking-card {
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    padding: 32px;
+    width: 100%;
+    max-width: 640px;
+}
+
+.ranking-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 24px;
+}
+
+.ranking-header h1 {
+    color: #d84315;
+    font-size: 24px;
+}
+
+.btn-back {
+    font-size: 14px;
+    color: #d84315;
+    text-decoration: none;
+    border: 1px solid #d84315;
+    padding: 6px 14px;
+    border-radius: 6px;
+}
+
+.btn-back:hover {
+    background-color: #d84315;
+    color: #fff;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+}
+
+thead tr {
+    background-color: #f0f4f8;
+}
+
+th {
+    text-align: left;
+    padding: 10px 12px;
+    color: #555;
+    font-weight: 600;
+    font-size: 13px;
+    text-transform: uppercase;
+}
+
+td {
+    padding: 12px;
+    border-bottom: 1px solid #f0f4f8;
+    color: #333;
+}
+
+tr:last-child td { border-bottom: none; }
+
+tr.top-1 td { background-color: #fffde7; font-weight: bold; }
+tr.top-2 td { background-color: #f5f5f5; }
+tr.top-3 td { background-color: #fff8f0; }
+
+.rank { font-size: 18px; width: 48px; }
+.score { font-weight: bold; color: #d84315; }
+.duration { color: #888; }
+.date { color: #aaa; font-size: 13px; }
+.loading { text-align: center; color: #aaa; padding: 32px; }

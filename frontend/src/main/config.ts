@@ -1,0 +1,1 @@
+export const API_BASE: string = (window as any).API_URL ?? 'http://localhost:4000';

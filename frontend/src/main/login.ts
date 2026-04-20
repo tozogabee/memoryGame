@@ -1,6 +1,6 @@
-export {};
+import { API_BASE } from './config.js';
 
-const API = 'http://localhost:4000/api/auth';
+const API = `${API_BASE}/api/auth`;
 
 function showTab(tab: 'login' | 'register' | 'ranking'): void {
     (document.getElementById('form-login') as HTMLElement).classList.toggle('hidden', tab !== 'login');

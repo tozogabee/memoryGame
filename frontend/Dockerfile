@@ -5,4 +5,8 @@ RUN npm install
 COPY . .
 RUN npm run build
 EXPOSE 3000
-CMD ["npm", "start"]
+
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]

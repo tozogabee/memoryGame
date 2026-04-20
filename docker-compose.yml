@@ -3,6 +3,8 @@ services:
     build: ./frontend
     ports:
       - "3000:3000"
+    environment:
+      - API_URL=${API_URL}
     depends_on:
       - backend
 
