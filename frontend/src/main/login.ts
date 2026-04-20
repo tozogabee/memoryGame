@@ -56,9 +56,9 @@ async function handleLogin(e: Event): Promise<void> {
             credentials: 'include',
             body: JSON.stringify({ username, password }),
         });
-        const data = await res.json();
+        const data = await res.json().catch(() => ({}));
         if (!res.ok) {
-            errorEl.textContent = data.error;
+            errorEl.textContent = data.error || 'Login failed. Please try again.';
             return;
         }
         window.location.href = 'game.html';
@@ -90,16 +90,14 @@ async function handleRegister(e: Event): Promise<void> {
         });
         const data = await res.json();
         if (!res.ok) {
-            errorEl.textContent = data.error;
+            errorEl.textContent = data.error || 'Registration failed. Please try again.';
             return;
         }
 
-        (document.getElementById('form-register') as HTMLElement).classList.add('hidden');
-        (document.getElementById('tab-login') as HTMLElement).classList.remove('active');
-        (document.getElementById('tab-register') as HTMLElement).classList.remove('active');
-        const msg = document.getElementById('check-email-msg') as HTMLElement;
-        msg.textContent = `We sent a confirmation email to ${email}. Click the link inside to activate your account.`;
-        (document.getElementById('check-email') as HTMLElement).classList.remove('hidden');
+        showTab('login');
+        const loginError = document.getElementById('login-error') as HTMLElement;
+        loginError.style.color = 'green';
+        loginError.textContent = 'Registration successful! You can now log in.';
     } catch {
         errorEl.textContent = 'Could not connect to server.';
     }

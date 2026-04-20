@@ -1,9 +1,7 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import crypto from 'crypto';
 import pool from '../db';
-import { sendVerificationEmail } from '../email';
 import { createLogger } from '../logger';
 
 const log = createLogger('AuthRoute');
@@ -38,17 +36,14 @@ router.post('/register', async (req: Request, res: Response) => {
 
     try {
         const hash = await bcrypt.hash(password, 10);
-        const verificationToken = crypto.randomUUID();
 
         await pool.query(
-            'INSERT INTO users (username, email, password_hash, verification_token) VALUES ($1, $2, $3, $4)',
-            [username, email.toLowerCase(), hash, verificationToken]
+            'INSERT INTO users (username, email, password_hash, email_verified) VALUES ($1, $2, $3, TRUE)',
+            [username, email.toLowerCase(), hash]
         );
 
         log.info(`New user registered: ${username} (${email})`);
-        await sendVerificationEmail(email, username, verificationToken);
-
-        res.status(201).json({ message: 'Registration successful. Please check your email to confirm your account.' });
+        res.status(201).json({ message: 'Registration successful. You can now log in.' });
     } catch (err: any) {
         if (err.code === '23505') {
             const field = err.detail?.includes('email') ? 'Email' : 'Username';
@@ -102,12 +97,6 @@ router.post('/login', async (req: Request, res: Response) => {
         if (!user || !(await bcrypt.compare(password, user.password_hash))) {
             log.warn(`Failed login attempt for username: ${username}`);
             res.status(401).json({ error: 'Invalid username or password' });
-            return;
-        }
-
-        if (!user.email_verified) {
-            log.warn(`Login blocked — email not verified for: ${username}`);
-            res.status(403).json({ error: 'Please confirm your email before logging in' });
             return;
         }
 
