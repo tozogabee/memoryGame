@@ -15,7 +15,4 @@ yarn-error.log*
 /dist
 /src/dist
 
-# Environment variables (contain secrets)
-.env
-backend/.env
 
