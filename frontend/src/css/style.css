@@ -28,7 +28,8 @@ h1 { color: #d84315; }
     color: #555;
 }
 
-.user-info button {
+.user-info button,
+.btn-ranking {
     padding: 4px 12px;
     background: none;
     border: 1px solid #d84315;
@@ -36,9 +37,11 @@ h1 { color: #d84315; }
     color: #d84315;
     cursor: pointer;
     font-size: 13px;
+    text-decoration: none;
 }
 
-.user-info button:hover {
+.user-info button:hover,
+.btn-ranking:hover {
     background-color: #d84315;
     color: #fff;
 }

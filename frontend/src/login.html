@@ -13,6 +13,7 @@
         <div class="tabs">
             <button id="tab-login" class="tab active" onclick="showTab('login')">Login</button>
             <button id="tab-register" class="tab" onclick="showTab('register')">Register</button>
+            <button id="tab-ranking" class="tab" onclick="showTab('ranking')">Ranking</button>
         </div>
 
         <!-- Login Form -->
@@ -50,6 +51,23 @@
             <p id="register-error" class="error"></p>
             <button type="submit" class="btn-submit">Register</button>
         </form>
+
+        <!-- Ranking Panel -->
+        <div id="panel-ranking" class="hidden">
+            <table class="ranking-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th>Time</th>
+                    </tr>
+                </thead>
+                <tbody id="ranking-body">
+                    <tr><td colspan="4" class="ranking-loading">Loading...</td></tr>
+                </tbody>
+            </table>
+        </div>
 
         <!-- Check email notice (shown after successful registration) -->
         <div id="check-email" class="hidden">

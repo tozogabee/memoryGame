@@ -121,6 +121,7 @@ function checkFounds(): void {
 
         if (pairsFound === cardIcons.length) {
             stopTimer();
+            saveScore(score, elapsedSeconds);
             setTimeout(() => alert(`Congratulations! You found all pairs!\nScore: ${score} | Time: ${elapsedSeconds}s`), 500);
         }
     } else {
@@ -134,6 +135,20 @@ function checkFounds(): void {
     // Reset for the next turn
     reversedCards = [];
     lock = false;
+}
+
+// --- 6. SAVE SCORE TO BACKEND ---
+async function saveScore(finalScore: number, durationSeconds: number): Promise<void> {
+    try {
+        await fetch('http://localhost:4000/api/scores', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ score: finalScore, duration_seconds: durationSeconds }),
+        });
+    } catch {
+        console.warn('Could not save score to server');
+    }
 }
 
 // Expose initGame globally for the restart button

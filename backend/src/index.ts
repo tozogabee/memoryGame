@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import { Request, Response } from 'express';
 import swaggerSpec from './swagger';
 import authRouter from './routes/auth';
+import scoresRouter from './routes/scores';
 import { initDb } from './db';
 import { createLogger } from './logger';
 
@@ -34,6 +35,7 @@ app.get('/health', (_req: Request, res: Response) => {
 });
 
 app.use('/api/auth', authRouter);
+app.use('/api/scores', scoresRouter);
 
 initDb()
     .then(() => {

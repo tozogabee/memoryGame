@@ -13,25 +13,8 @@ services:
     env_file:
       - .env
     depends_on:
-      liquibase:
-        condition: service_completed_successfully
-
-  liquibase:
-    build:
-      context: ./backend
-      dockerfile: Dockerfile.liquibase
-    depends_on:
       postgres:
         condition: service_healthy
-    volumes:
-      - ./backend/liquibase/changelog:/liquibase/changelog
-    command: >
-      --search-path=/liquibase/changelog,/liquibase/changelog/changes,/liquibase/changelog/changes/sql
-      --url=jdbc:postgresql://postgres:${DB_PORT:-5432}/${DB_NAME:-memorygame}
-      --username=${DB_USER:-memorygame}
-      --password=${DB_PASSWORD:-memorygame}
-      --changelog-file=db.changelog-master.yaml
-      update
 
   postgres:
     image: postgres:16-alpine

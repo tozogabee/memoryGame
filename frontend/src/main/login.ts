@@ -2,13 +2,44 @@ export {};
 
 const API = 'http://localhost:4000/api/auth';
 
-function showTab(tab: 'login' | 'register'): void {
-    const isLogin = tab === 'login';
-    (document.getElementById('form-login') as HTMLElement).classList.toggle('hidden', !isLogin);
-    (document.getElementById('form-register') as HTMLElement).classList.toggle('hidden', isLogin);
+function showTab(tab: 'login' | 'register' | 'ranking'): void {
+    (document.getElementById('form-login') as HTMLElement).classList.toggle('hidden', tab !== 'login');
+    (document.getElementById('form-register') as HTMLElement).classList.toggle('hidden', tab !== 'register');
+    (document.getElementById('panel-ranking') as HTMLElement).classList.toggle('hidden', tab !== 'ranking');
     (document.getElementById('check-email') as HTMLElement).classList.add('hidden');
-    (document.getElementById('tab-login') as HTMLElement).classList.toggle('active', isLogin);
-    (document.getElementById('tab-register') as HTMLElement).classList.toggle('active', !isLogin);
+
+    (document.getElementById('tab-login') as HTMLElement).classList.toggle('active', tab === 'login');
+    (document.getElementById('tab-register') as HTMLElement).classList.toggle('active', tab === 'register');
+    (document.getElementById('tab-ranking') as HTMLElement).classList.toggle('active', tab === 'ranking');
+
+    if (tab === 'ranking') loadRanking();
+}
+
+async function loadRanking(): Promise<void> {
+    const tbody = document.getElementById('ranking-body') as HTMLElement;
+    tbody.innerHTML = '<tr><td colspan="4" class="ranking-loading">Loading...</td></tr>';
+
+    try {
+        const res = await fetch('http://localhost:4000/api/scores/ranking');
+        const data: { username: string; score: number; duration_seconds: number }[] = await res.json();
+
+        if (!data.length) {
+            tbody.innerHTML = '<tr><td colspan="4" class="ranking-loading">No scores yet. Be the first!</td></tr>';
+            return;
+        }
+
+        tbody.innerHTML = data.map((entry, i) => {
+            const medal = i === 0 ? '🥇' : i === 1 ? '🥈' : i === 2 ? '🥉' : String(i + 1);
+            return `<tr>
+                <td>${medal}</td>
+                <td>${entry.username}</td>
+                <td><strong>${entry.score}</strong></td>
+                <td>${entry.duration_seconds}s</td>
+            </tr>`;
+        }).join('');
+    } catch {
+        tbody.innerHTML = '<tr><td colspan="4" class="ranking-loading">Could not load ranking.</td></tr>';
+    }
 }
 
 async function handleLogin(e: Event): Promise<void> {
